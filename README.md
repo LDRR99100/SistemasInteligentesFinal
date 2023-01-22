@@ -6,7 +6,7 @@ Spam emails detector.
 
 Implemented on Python 3.11 using scikit-learn and tkinter libraries.
 
-![](https://https://github.com/LDRR99100/SistemasInteligentesFinal/blob/main/SpamDetector_screenshot.PNG)
+![](https://github.com/LDRR99100/SistemasInteligentesFinal/blob/main/SpamDetector_screenshot.PNG)
 
 The user is able to choose between classifiers to predict if a given email (input field on the bottom-left side) is a spam email.
 

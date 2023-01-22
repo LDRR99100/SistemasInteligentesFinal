@@ -38,26 +38,9 @@ matrix_frame.grid(  row = 1, column = 1,  sticky="NESW", padx = 10, pady = 10)
 # Botones para cada modelo
 models_buttons = []
 
-models_buttons.append(Button(buttons_frame, text=names[0], font=button_font, width=20, command=lambda: activate_model(0)))
-models_buttons[0].grid(row = 0, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[1], font=button_font, width=20, command=lambda: activate_model(1)))
-models_buttons[1].grid(row = 1, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[2], font=button_font, width=20, command=lambda: activate_model(2)))
-models_buttons[2].grid(row = 2, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[3], font=button_font, width=20, command=lambda: activate_model(3)))
-models_buttons[3].grid(row = 3, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[4], font=button_font, width=20, command=lambda: activate_model(4)))
-models_buttons[4].grid(row = 4, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[5], font=button_font, width=20, command=lambda: activate_model(5)))
-models_buttons[5].grid(row = 5, column = 1, pady = 10)
-
-models_buttons.append(Button(buttons_frame, text=names[6], font=button_font, width=20, command=lambda: activate_model(6)))
-models_buttons[6].grid(row = 6, column = 1, pady = 10)
+for index in range(0, len(names)):
+  models_buttons.append(Button(buttons_frame, text=names[index], font=button_font, width=20, command=lambda i=index: activate_model(i)))
+  models_buttons[index].grid(row = index, column = 1, pady = 10)
 
 # Etiqueta que muestra si el clasificador está activado
 for index in range(0, len(models_activated)):
@@ -134,28 +117,24 @@ for index in range(0, len(names)):
 actual_image_name = Label(matrix_frame, text=names[image_counter], width=20, font=button_font, bg=frame_background, relief=GROOVE)
 actual_image_name.grid(row = 1, column = 1, sticky="N")
 
-back_button = Button(matrix_frame, font=button_font, bg="gray", text="<<", command=lambda: back())
-next_button = Button(matrix_frame, font=button_font, bg="gray", text=">>", command=lambda: forward())
+back_button = Button(matrix_frame, font=button_font, bg="gray", text="<<", command=lambda: show_next(False))
+next_button = Button(matrix_frame, font=button_font, bg="gray", text=">>", command=lambda: show_next(True))
 back_button.grid(row = 1, column = 0, sticky="N")
 next_button.grid(row = 1, column = 2, sticky="N")
 
-def back():
+def show_next(next):
   global image_counter
   global matrix_all_images
   global actual_image_name
 
-  image_counter = image_counter - 1
+  if (next):
+    image_counter = image_counter + 1
+  else:
+    image_counter = image_counter - 1
+  
   if (image_counter < 0): image_counter = len(matrix_all_images)  - 1
-  matrix_label.config(image=matrix_all_images[image_counter])
-  actual_image_name.config(text=names[image_counter])
-
-def forward():
-  global image_counter
-  global matrix_all_images
-  global actual_image_name
-
-  image_counter = image_counter + 1
   if (image_counter > len(matrix_all_images) - 1): image_counter = 0
+
   matrix_label.config(image=matrix_all_images[image_counter])
   actual_image_name.config(text=names[image_counter])
 

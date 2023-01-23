@@ -13,4 +13,5 @@ The user is able to choose between classifiers to predict if a given email (inpu
 ## Authors and roles
 
 Luis David Romero Romero (alu0101129884) - Main programmer
+
 Roberto Carrazana Pernía (alu0101444741) - GUI designer

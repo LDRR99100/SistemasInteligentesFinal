@@ -8,14 +8,20 @@ import sys
 import subprocess
 def check_packages():
     package_names = [ 'scikit-learn', 'matplotlib', 'numpy', 'pandas',
-                  'seaborn', 'tk', 'Pillow']
+                  'seaborn', 'tk', 'Pillow', 'nltk', 're']
     for package in package_names:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
 #check_packages()
 # ********************************************************
+import nltk 
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
+
 import numpy as np
 import pandas as pd
+import re
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -57,6 +63,26 @@ classifiers = [
   LogisticRegression(solver = 'liblinear', C=10, penalty = 'l2')
 ]
 
+# Preprocesamiento de texto
+stop_words = stopwords.words('english')
+stemmer = SnowballStemmer('english')
+
+text_cleaning_re = "@\S+|https?:\S+|http?:\S+|[^A-Za-z0-9]:\S+|subject:\S+|nbsp"
+
+def preprocess(text, stem=False):
+  text = re.sub(text_cleaning_re, ' ', str(text).lower()).strip()
+  tokens = []
+  for token in text.split():
+    if token not in stop_words:
+      if stem:
+        tokens.append(stemmer.stem(token))
+      else:
+        tokens.append(token)
+  return " ".join(tokens)
+
+data.text = data.text.apply(lambda x: preprocess(x))
+
+# Variables para el entrenamiento
 x, y = data.text, data.label
 x_train , x_test, y_train , y_test = train_test_split(x, y, test_size=0.3)
 Vectorizer = CountVectorizer()
